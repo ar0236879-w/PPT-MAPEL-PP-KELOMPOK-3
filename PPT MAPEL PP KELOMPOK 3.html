@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi Kelompok 3 - X Farmasi</title>
+    <!-- Font Modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- SETUP DASAR --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Deep Ocean Theme */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #b0c4de;
+            --danger: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- DECK & SLIDES --- */
+        .deck {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            position: relative;
+            perspective: 2000px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(50px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            visibility: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Custom Scrollbar */
+        .slide::-webkit-scrollbar { width: 8px; }
+        .slide::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            visibility: visible;
+            z-index: 10;
+        }
+        
+        .slide.prev {
+            transform: translateX(-50px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            max-width: 900px;
+            margin-bottom: 20px;
+        }
+
+        /* --- ANGGOTA KELOMPOK STYLE --- */
+        .group-badge {
+            background: rgba(0, 210, 255, 0.2);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            border: 1px solid var(--accent);
+            display: inline-block;
+        }
+
+        .members-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            max-width: 900px;
+        }
+
+        .member-name {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .member-name:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* --- GRID CARDS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .glass-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .pasal-badge {
+            background: var(--accent);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .card-content { font-size: 0.95rem; color: #e0e0e0; }
+        .analysis-text { font-style: italic; color: var(--accent); font-size: 0.85rem; margin-top: 10px; }
+
+        /* --- LIST & BULLETS --- */
+        .styled-list {
+            text-align: left;
+            width: 80%;
+            margin: 0 auto;
+            list-style: none;
+        }
+        .styled-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+        .styled-list li::before {
+            content: '➤';
+            color: var(--accent);
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        /* --- COMPARISON BOX --- */
+        .comparison-box {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .comp-col {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .bg-danger { background: rgba(255, 107, 107, 0.1); border: 1px solid var(--danger); }
+        .bg-success { background: rgba(81, 207, 102, 0.1); border: 1px solid var(--success); }
+        
+        .comp-title { font-weight: bold; margin-bottom: 15px; display: block; font-size: 1.1rem; }
+        .text-danger { color: var(--danger); }
+        .text-success { color: var(--success); }
+
+        /* --- NAVIGATION --- */
+        .nav-controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--accent);
+            color: var(--text-main);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .comparison-box { flex-direction: column; }
+            .styled-list { width: 100%; padding: 0 20px; }
+            h1 { font-size: 1.8rem; }
+            .grid-container { grid-template-columns: 1fr; }
+            .members-list { flex-direction: column; width: 100%; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="deck">
+
+        <!-- SLIDE 1: COVER (DENGAN KELOMPOK) -->
+        <div class="slide active" id="slide1">
+            <h3>Pendidikan Pancasila</h3>
+            <div class="group-badge">KELAS X. FARMASI</div>
+            
+            <div style="font-size: 4rem; margin-bottom: 20px;">🏛️ ⚖️</div>
+            <h1>Analisis Perlindungan Hak Minoritas</h1>
+            <p>Peran UUD 1945 sebagai benteng tertinggi keadilan bagi seluruh warga negara.</p>
+            
+            <div class="group-badge" style="margin-top: 30px; font-size: 0.9rem; padding: 5px 15px;">KELOMPOK 3</div>
+            
+            <div class="members-list">
+                <div class="member-name">Reski Ardiansyah</div>
+                <div class="member-name">Muh. Rifky</div>
+                <div class="member-name">Sri Ainun</div>
+                <div class="member-name">Riana</div>
+                <div class="member-name">Irda</div>
+                <div class="member-name">Dwi Aprilia</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: DASAR KONSTITUSIONAL -->
+        <div class="slide" id="slide2">
+            <h2>Dasar Konstitusional</h2>
+            <p>UUD 1945 mengandung norma dasar yang melarang diskriminasi dan menjamin persamaan hak di mata hukum.</p>
+            
+            <div class="grid-container">
+                <div class="glass-card">
+                    <span class="pasal-badge">Pasal 27 Ayat (1)</span>
+                    <div class="card-content">"Bersamaan kedudukannya dalam hukum... tanpa ada kecuali."</div>
+                    <div class="analysis-text">❗ Mencegah diskriminasi hukum.</div>
+                </div>
+                <div class="glass-card">
+                    <span class="pasal-badge">Pasal 28D Ayat (1)</span>
+                    <div class="card-content">"Hak atas perlakuan yang sama di depan hukum."</div>
+                    <div class="analysis-text">⚖️ Jaminan kesetaraan (Equality).</div>
+                </div>
+                <div class="glass-card">
+                    <span class="pasal-badge">Pasal 28E Ayat (1)</span>
+                    <div class="card-content">"Bebas memeluk agamanya dan kepercayaannya..."</div>
+                    <div class="analysis-text">🙏 Kebebasan beragama.</div>
+                </div>
+                <div class="glass-card">
+                    <span class="pasal-badge">Pasal 29 Ayat (2)</span>
+                    <div class="card-content">"Negara menjamin kemerdekaan... beribadat..."</div>
+                    <div class="analysis-text">🏛️ Kewajiban Negara melindungi ibadah.</div>
+                </div>
+                <div class="glass-card">
+                    <span class="pasal-badge">Pasal 28I Ayat (2)</span>
+                    <div class="card-content">"Bebas dari penyiksaan atau perlakuan merendahkan..."</div>
+                    <div class="analysis-text">🛡️ Melindungi martabat manusia.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: MEKANISME PERLINDUNGAN -->
+        <div class="slide" id="slide3">
+            <h2>Mekanisme Perlindungan</h2>
+            <p>Bagaimana pasal-pasal tersebut diterjemahkan menjadi hak nyata bagi minoritas?</p>
+
+            <div class="grid-container">
+                <div class="glass-card">
+                    <h3 style="color:var(--accent)">Kesetaraan Mutlak</h3>
+                    <p style="font-size:0.9rem">Minoritas memiliki hak yang sama untuk mendapatkan pelayanan publik, pendidikan, dan perlindungan hukum seperti mayoritas.</p>
+                </div>
+                <div class="glass-card">
+                    <h3 style="color:var(--accent)">Keamanan Ibadah</h3>
+                    <p style="font-size:0.9rem">Negara wajib menjamin kelancaran praktik keagamaan, termasuk izin pembangunan tempat ibadah yang adil.</p>
+                </div>
+                <div class="glass-card">
+                    <h3 style="color:var(--accent)">Hak Berserikat</h3>
+                    <p style="font-size:0.9rem">Minoritas berhak membentuk organisasi, menyuarakan aspirasi, dan berpartisipasi dalam pembangunan politik.</p>
+                </div>
+            </div>
+
+            <ul class="styled-list">
+                <li><strong>Jaminan Rasa Aman:</strong> Negara wajib melindungi fisik dan psikologis warganya dari ancaman intoleransi (Pasal 30).</li>
+                <li><strong>Pengadilan Konstitusi:</strong> Jalur hukum jika undang-undang dianggap melanggar hak konstitusional.</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 4: PERAN NEGARA -->
+        <div class="slide" id="slide4">
+            <h2>Peran Aktif Negara</h2>
+            <p>Negara tidak boleh pasif. UUD 1945 mewajibkan negara untuk turun tangan (Perlindungan Positif).</p>
+
+            <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem;">🚫</div>
+                    <h3 style="color: var(--danger)">Perlindungan Negatif</h3>
+                    <p style="font-size: 0.9rem; max-width: 300px;">Negara <strong>dilarang</strong> membuat aturan yang merugikan minoritas atau melakukan diskriminasi.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem;">✅</div>
+                    <h3 style="color: var(--success)">Perlindungan Positif</h3>
+                    <p style="font-size: 0.9rem; max-width: 300px;">Negara <strong>WAJIB</strong> mengayomi, menjamin keamanan, dan menfasilitasi hak minoritas agar terpenuhi.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                <p style="margin:0; font-size: 1.1rem; color: #fff;">🎯 <strong>Tujuan Utama:</strong> Mewujudkan keadilan sosial bagi seluruh rakyat Indonesia.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: TANTANGAN & SOLUSI -->
+        <div class="slide" id="slide5">
+            <h2>Tantangan & Solusi</h2>
+            <p>Implementasi ideal seringkali bertemu dengan realitas di lapangan.</p>
+
+            <div class="comparison-box">
+                <div class="comp-col bg-danger">
+                    <span class="comp-title text-danger">⚠️ Tantangan</span>
+                    <ul class="styled-list" style="width:100%; margin:0; padding:0; list-style: none;">
+                        <li style="border:none; padding:5px 0;">❌ Intoleransi & radikalisme.</li>
+                        <li style="border:none; padding:5px 0;">❌ Politik identitas.</li>
+                        <li style="border:none; padding:5px 0;">❌ Perda Diskriminatif.</li>
+                        <li style="border:none; padding:5px 0;">❌ Penegakan hukum lemah.</li>
+                    </ul>
+                </div>
+
+                <div class="comp-col bg-success">
+                    <span class="comp-title text-success">💡 Solusi</span>
+                    <ul class="styled-list" style="width:100%; margin:0; padding:0; list-style: none;">
+                        <li style="border:none; padding:5px 0;">✅ Penguatan penegakan hukum.</li>
+                        <li style="border:none; padding:5px 0;">✅ Harmonisasi peraturan.</li>
+                        <li style="border:none; padding:5px 0;">✅ Edukasi toleransi.</li>
+                        <li style="border:none; padding:5px 0;">✅ Peran aktif Komnas HAM.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: KESIMPULAN (DENGAN KREDIT KELOMPOK) -->
+        <div class="slide" id="slide6">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🇮🇩</div>
+            <h2>Kesimpulan</h2>
+            <p>UUD 1945 adalah <strong>BENTENG TERAKHIR</strong> bagi kelompok minoritas.</p>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; border-left: 5px solid var(--accent); text-align: left; margin-bottom: 30px;">
+                <p style="color: #fff; margin-bottom: 15px;"><strong>Norma Konstitusional Menjamin:</strong></p>
+                <p style="margin: 5px;">1. Persamaan Kedudukan</p>
+                <p style="margin: 5px;">2. Kebebasan Beragama</p>
+                <p style="margin: 5px;">3. Hak Asasi Manusia</p>
+                <p style="margin: 5px;">4. Jaminan Rasa Aman</p>
+            </div>
+
+            <!-- Bagian Kredit Kelompok di Slide Terakhir -->
+            <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+                <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; text-transform: uppercase;">Disusun Oleh:</p>
+                <div class="members-list" style="margin-top: 10px; gap: 10px;">
+                    <span style="font-weight: 600; color: #fff;">Reski Ardiansyah</span> • 
+                    <span style="font-weight: 600; color: #fff;">Muh. Rifky</span> • 
+                    <span style="font-weight: 600; color: #fff;">Sri Ainun</span> • 
+                    <span style="font-weight: 600; color: #fff;">Riana</span> • 
+                    <span style="font-weight: 600; color: #fff;">Irda</span> • 
+                    <span style="font-weight: 600; color: #fff;">Dwi Aprilia</span>
+                </div>
+                <p style="margin-top: 15px; font-size: 1.2rem; font-weight: bold; color: var(--accent);">TERIMA KASIH</p>
+            </div>
+        </div>
+
+        <!-- NAVIGASI -->
+        <div class="progress-bar" id="progress">01 / 06</div>
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()">Kembali</button>
+            <button class="nav-btn" onclick="nextSlide()" id="nextBtn">Mulai Presentasi</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const nextBtn = document.getElementById('nextBtn');
+        const progressText = document.getElementById('progress');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            progressText.innerText = `0${currentSlide + 1} / 0${totalSlides}`;
+
+            if (currentSlide === 0) nextBtn.innerText = "Mulai Presentasi";
+            else if (currentSlide === totalSlides - 1) nextBtn.innerText = "Selesai";
+            else nextBtn.innerText = "Lanjut";
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            } else {
+                currentSlide = 0;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
